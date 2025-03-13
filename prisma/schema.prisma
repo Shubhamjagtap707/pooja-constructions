@@ -1,0 +1,65 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  password  String   
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  category    String
+  description String   @db.Text
+  location    String
+  year        String
+  featured    Boolean  @default(false)
+  images      String[] // Array of image URLs
+  details     Json     // Additional project details
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  features    String[]
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BitumenProduct {
+  id             String   @id @default(cuid())
+  title          String
+  description    String   @db.Text
+  specifications String[]
+  applications   String[]
+  image          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  position  String
+  bio       String   @db.Text
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
